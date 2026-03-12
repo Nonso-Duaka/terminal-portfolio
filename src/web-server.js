@@ -33,8 +33,19 @@ wss.on('connection', (ws) => {
 
   redraw();
 
+  // Fast tick during boot/typing, then slow for twinkle
+  const fastInterval = setInterval(() => {
+    if (renderer.bootPhase || renderer.typingPhase) {
+      redraw();
+    }
+  }, 80);
+
   // Twinkling stars - re-render every 1.5s
-  const twinkleInterval = setInterval(() => redraw(), 1500);
+  const twinkleInterval = setInterval(() => {
+    if (!renderer.bootPhase && !renderer.typingPhase) {
+      redraw();
+    }
+  }, 1500);
 
   ws.on('message', (msg) => {
     try {
@@ -78,6 +89,7 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('close', () => {
+    clearInterval(fastInterval);
     clearInterval(twinkleInterval);
     console.log('Web client disconnected');
   });

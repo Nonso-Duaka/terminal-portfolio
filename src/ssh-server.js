@@ -54,8 +54,15 @@ const server = new Server({ hostKeys: [hostKey] }, (client) => {
         // Initial render
         redraw();
 
+        // Fast tick for boot/typing
+        const fastInterval = setInterval(() => {
+          if (renderer.bootPhase || renderer.typingPhase) redraw();
+        }, 80);
+
         // Twinkling stars - re-render every 1.5s
-        const twinkleInterval = setInterval(() => redraw(), 1500);
+        const twinkleInterval = setInterval(() => {
+          if (!renderer.bootPhase && !renderer.typingPhase) redraw();
+        }, 1500);
 
         // Handle window resize
         session.on('window-change', (accept, reject, info) => {
@@ -82,6 +89,7 @@ const server = new Server({ hostKeys: [hostKey] }, (client) => {
           else if (str >= '1' && str <= '5') key = str;
           else if (str === 'q' || hex === '03') {
             alive = false;
+            clearInterval(fastInterval);
             clearInterval(twinkleInterval);
             stream.write(c.showCursor + c.clearScreen);
             stream.write(`${c.cyan}Thanks for visiting! — Nonso Duaka${c.reset}\r\n`);
