@@ -149,7 +149,7 @@ class TUIRenderer {
     });
     lines.push('');
     lines.push(`${c.bold}${c.white}For full details, view my resume at:${c.reset}`);
-    lines.push(`${c.bold}${c.white}<your-domain>/resume.pdf${c.reset}`);
+    lines.push(`${c.bold}${c.white}drive.google.com/open?id=1XzbaQO_9JLhfj7kaX5T8ZJeFKEBroN8t${c.reset}`);
     return lines;
   }
 
