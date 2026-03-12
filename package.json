@@ -1,0 +1,19 @@
+{
+  "name": "terminal-website",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "ssh": "node src/ssh-server.js",
+    "web": "node src/web-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.2.1",
+    "ssh2": "^1.17.0",
+    "ws": "^8.19.0"
+  }
+}
