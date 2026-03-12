@@ -4,8 +4,8 @@ module.exports = {
   tagline: 'Aspiring Computational Biology & ML Researcher',
   email: 'nonsoduaka821@gmail.com',
   phone: '(318)-232-2055',
-  linkedin: 'linkedin.com/in/nonsoduaka',
-  github: 'github.com/nonsoduaka',
+  linkedin: 'linkedin.com/in/nonso-duaka-3117b8316',
+  github: 'github.com/Nonso-Duaka',
 
   education: {
     school: 'Grambling State University',
