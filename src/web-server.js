@@ -60,6 +60,13 @@ wss.on('connection', (ws) => {
         else if (k === 'k') key = 'up';
         else if (k === 'j') key = 'down';
         else if (k >= '1' && k <= '5') key = k;
+        else if (k === 'q') {
+          if (ws.readyState === ws.OPEN) {
+            ws.send('\x1b[2J\x1b[H\r\n  Goodbye! 👋\r\n');
+            setTimeout(() => ws.close(), 500);
+          }
+          return;
+        }
 
         if (key && renderer.handleKey(key)) {
           redraw();
