@@ -110,6 +110,10 @@ class TUIRenderer {
     const hintPad = Math.max(0, Math.floor((cols - stripAnsi(hint).length) / 2));
     out += pos(tabRow + 2, 1) + ' '.repeat(hintPad) + hint;
 
+    const sshHint = `${c.dim}ssh -p 24825 interchange.proxy.rlwy.net${c.reset}`;
+    const sshPad = Math.max(0, Math.floor((cols - stripAnsi(sshHint).length) / 2));
+    out += pos(tabRow + 3, 1) + ' '.repeat(sshPad) + sshHint;
+
     return out;
   }
 
