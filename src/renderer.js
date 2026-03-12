@@ -148,8 +148,8 @@ class TUIRenderer {
       if (i < content.experience.length - 1) lines.push('');
     });
     lines.push('');
-    lines.push(`${c.bold}${c.white}For full details, view my resume at:${c.reset}`);
-    lines.push(`${c.bold}${c.white}drive.google.com/open?id=1XzbaQO_9JLhfj7kaX5T8ZJeFKEBroN8t${c.reset}`);
+    lines.push(`${c.bold}${c.white}For full details, view my resume:${c.reset}`);
+    lines.push(`\x1b]8;;https://drive.google.com/open?id=1XzbaQO_9JLhfj7kaX5T8ZJeFKEBroN8t\x07${c.cyan}${c.bold}▸ Click here to view resume${c.reset}\x1b]8;;\x07`);
     return lines;
   }
 
@@ -163,10 +163,20 @@ class TUIRenderer {
       '',
       `${c.bold}${c.white}Coursework${c.reset}`,
       '',
-      `${c.bold}${c.white}CS${c.reset}        ${c.bold}${c.white}Data Structures & Algorithms, Artificial Intelligence,${c.reset}`,
-      `${c.bold}${c.white}          Machine Learning, Operating Systems, Software Engineering${c.reset}`,
-      `${c.bold}${c.white}Math/Phys${c.reset} ${c.bold}${c.white}Linear Algebra, Calculus, Statistics, Thermodynamics${c.reset}`,
-      `${c.bold}${c.white}Biology${c.reset}   ${c.bold}${c.white}Biochemistry, Organic Chemistry, Cell Biology${c.reset}`,
+      `${c.cyan}CS${c.reset}`,
+      `${c.bold}${c.white}Object-Oriented Programming, Data Structures${c.reset}`,
+      `${c.bold}${c.white}and Algorithms, Intro to Artificial${c.reset}`,
+      `${c.bold}${c.white}Intelligence, Programming Language Concept,${c.reset}`,
+      `${c.bold}${c.white}Machine Learning, Operating Systems,${c.reset}`,
+      `${c.bold}${c.white}Software Engineering, Discrete Math,${c.reset}`,
+      `${c.bold}${c.white}Computer Networks${c.reset}`,
+      '',
+      `${c.cyan}Math, Physics & Biology${c.reset}`,
+      `${c.bold}${c.white}Linear Algebra, Numerical Methods,${c.reset}`,
+      `${c.bold}${c.white}Multivariable Calculus, Probability &${c.reset}`,
+      `${c.bold}${c.white}Statistics, Modern Physics, Thermodynamics,${c.reset}`,
+      `${c.bold}${c.white}Electrodynamics, Biochemistry, Organic${c.reset}`,
+      `${c.bold}${c.white}Chemistry, Cell and Molecular Biology${c.reset}`,
     ];
   }
 
@@ -174,10 +184,10 @@ class TUIRenderer {
     return [
       `${c.bold}${c.white}Get in Touch${c.reset}`,
       '',
-      `${c.bold}${c.white}Email${c.reset}      ${c.bold}${c.white}${content.email}${c.reset}`,
+      `${c.bold}${c.white}Email${c.reset}      \x1b]8;;mailto:${content.email}\x07${c.cyan}${c.bold}${content.email}${c.reset}\x1b]8;;\x07`,
       `${c.bold}${c.white}Phone${c.reset}      ${c.bold}${c.white}${content.phone}${c.reset}`,
-      `${c.bold}${c.white}LinkedIn${c.reset}   ${c.bold}${c.white}${content.linkedin}${c.reset}`,
-      `${c.bold}${c.white}GitHub${c.reset}     ${c.bold}${c.white}${content.github}${c.reset}`,
+      `${c.bold}${c.white}LinkedIn${c.reset}   \x1b]8;;https://${content.linkedin}\x07${c.cyan}${c.bold}${content.linkedin}${c.reset}\x1b]8;;\x07`,
+      `${c.bold}${c.white}GitHub${c.reset}     \x1b]8;;https://${content.github}\x07${c.cyan}${c.bold}${content.github}${c.reset}\x1b]8;;\x07`,
     ];
   }
 
