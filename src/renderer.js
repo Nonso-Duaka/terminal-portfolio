@@ -186,8 +186,8 @@ class TUIRenderer {
       '',
       `${c.bold}${c.white}Email${c.reset}      \x1b]8;;mailto:${content.email}\x07${c.cyan}${c.bold}${content.email}${c.reset}\x1b]8;;\x07`,
       `${c.bold}${c.white}Phone${c.reset}      ${c.bold}${c.white}${content.phone}${c.reset}`,
-      `${c.bold}${c.white}LinkedIn${c.reset}   \x1b]8;;https://${content.linkedin}\x07${c.cyan}${c.bold}${content.linkedin}${c.reset}\x1b]8;;\x07`,
-      `${c.bold}${c.white}GitHub${c.reset}     \x1b]8;;https://${content.github}\x07${c.cyan}${c.bold}${content.github}${c.reset}\x1b]8;;\x07`,
+      `${c.bold}${c.white}LinkedIn${c.reset}   \x1b]8;;https://www.linkedin.com/in/nonso-duaka-3117b8316/\x07${c.cyan}${c.bold}LinkedIn${c.reset}\x1b]8;;\x07`,
+      `${c.bold}${c.white}GitHub${c.reset}     \x1b]8;;https://github.com/Nonso-Duaka\x07${c.cyan}${c.bold}GitHub${c.reset}\x1b]8;;\x07`,
     ];
   }
 
