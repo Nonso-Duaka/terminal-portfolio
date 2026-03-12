@@ -179,39 +179,14 @@ class TUIRenderer {
     right.push('');
     const tabContent = this._getTabContent(textW);
 
-    // Typing effect on About tab (first load only)
-    if (this.typingPhase && this.selectedTab === 0) {
-      this.typingCharIndex += 2;
-      let charCount = 0;
-      for (let i = 0; i < tabContent.length; i++) {
-        const plain = stripAnsi(tabContent[i]);
-        if (charCount + plain.length <= this.typingCharIndex) {
-          right.push(tabContent[i]);
-          charCount += plain.length;
-        } else {
-          const remaining = this.typingCharIndex - charCount;
-          if (remaining > 0) {
-            // Show partial line with cursor
-            right.push(`${bright}${plain.substring(0, remaining)}${accent}▌${c.reset}`);
-          }
-          break;
-        }
+    // Apply fade-in on tab transition
+    tabContent.forEach(l => {
+      if (this.tabTransition > 2) {
+        right.push('');
+      } else {
+        right.push(l);
       }
-      // Check if typing is done
-      const totalChars = tabContent.reduce((sum, l) => sum + stripAnsi(l).length, 0);
-      if (this.typingCharIndex >= totalChars) {
-        this.typingPhase = false;
-      }
-    } else {
-      // Apply fade-in on tab transition
-      tabContent.forEach(l => {
-        if (this.tabTransition > 2) {
-          right.push(''); // blank during transition
-        } else {
-          right.push(l);
-        }
-      });
-    }
+    });
 
     for (let y = 0; y < contentRows; y++) {
       const row = y + 1;
