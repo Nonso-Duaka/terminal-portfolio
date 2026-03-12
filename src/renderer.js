@@ -162,6 +162,12 @@ class TUIRenderer {
     }
 
     this.tick++;
+    const mobile = cols < 80;
+
+    if (mobile) {
+      return this.renderMobile(cols, rows);
+    }
+
     let out = c.clearScreen + c.hideCursor;
 
     const textW = Math.min(Math.max(cols - TEXT_COL - 1, 20), 55);
@@ -268,6 +274,76 @@ class TUIRenderer {
     const sshHint = `${accent}ssh -p 24825 interchange.proxy.rlwy.net · © ${year} Nonso Duaka${c.reset}`;
     const sshPad = Math.max(0, Math.floor((cols - stripAnsi(sshHint).length) / 2));
     out += pos(tabRow + 3, 1) + ' '.repeat(sshPad) + sshHint;
+
+    return out;
+  }
+
+  // Mobile/narrow layout: stacked vertically
+  renderMobile(cols, rows) {
+    let out = c.clearScreen + c.hideCursor;
+    const textW = Math.max(cols - 4, 16);
+    const contentRows = rows - 4;
+
+    if (this.tabTransition > 0) {
+      this.tabTransition--;
+    }
+
+    // Build all lines vertically
+    const lines = [];
+
+    // Compact name banner - center each line
+    const mobileNameBanner = [
+      ' nonso duaka',
+    ];
+    lines.push('');
+    mobileNameBanner.forEach(l => {
+      const pad = Math.max(0, Math.floor((cols - l.length) / 2));
+      lines.push(`${bright}${c.bold}${' '.repeat(pad)}${l}${c.reset}`);
+    });
+    lines.push('');
+
+    // Tab content
+    const tabContent = this._getTabContent(textW);
+    tabContent.forEach(l => {
+      if (this.tabTransition > 2) {
+        lines.push('');
+      } else {
+        lines.push(l);
+      }
+    });
+
+    // Render visible lines with scroll offset
+    for (let y = 0; y < contentRows; y++) {
+      const li = y + this.scrollOffset;
+      if (li < lines.length && lines[li]) {
+        out += pos(y + 1, 2) + lines[li] + c.reset;
+      }
+    }
+
+    // Tab bar - compact for mobile
+    const tabRow = contentRows + 1;
+    let tabStr = '';
+    TABS.forEach((tab, i) => {
+      const short = tab.length > 5 ? tab.substring(0, 5) : tab;
+      if (i === this.selectedTab) {
+        tabStr += ` ${c.bold}${bright}✦${short}${c.reset}`;
+      } else {
+        tabStr += ` ${accent}${short}${c.reset}`;
+      }
+    });
+    const tabPad = Math.max(0, Math.floor((cols - stripAnsi(tabStr).length) / 2));
+    out += pos(tabRow + 1, 1) + ' '.repeat(tabPad) + tabStr;
+
+    // Hint - shorter for mobile
+    const hint = `${accent}[swipe or ← → ↑ ↓]${c.reset}`;
+    const hintPad = Math.max(0, Math.floor((cols - stripAnsi(hint).length) / 2));
+    out += pos(tabRow + 2, 1) + ' '.repeat(hintPad) + hint;
+
+    // Footer
+    const year = new Date().getFullYear();
+    const footer = `${accent}© ${year} Nonso Duaka${c.reset}`;
+    const footPad = Math.max(0, Math.floor((cols - stripAnsi(footer).length) / 2));
+    out += pos(tabRow + 3, 1) + ' '.repeat(footPad) + footer;
 
     return out;
   }

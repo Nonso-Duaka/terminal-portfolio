@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Nonso Duaka | Terminal Portfolio</title>
 
   <!-- SEO & Social -->
@@ -79,7 +79,7 @@
         brightBlack: '#626a73',
       },
       fontFamily: "'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace",
-      fontSize: 14,
+      fontSize: window.innerWidth < 600 ? 10 : 14,
       cursorBlink: false,
       cursorStyle: 'bar',
       disableStdin: false,
@@ -147,6 +147,28 @@
         }
       }, 150);
     });
+
+    // Touch/swipe support for mobile
+    let touchStartX = 0, touchStartY = 0;
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      const absDx = Math.abs(dx), absDy = Math.abs(dy);
+      if (Math.max(absDx, absDy) < 30) return; // ignore taps
+      if (ws.readyState !== WebSocket.OPEN) return;
+      if (absDx > absDy) {
+        // Horizontal swipe → switch tabs
+        ws.send(JSON.stringify({ type: 'key', key: dx > 0 ? 'ArrowLeft' : 'ArrowRight' }));
+      } else {
+        // Vertical swipe → scroll
+        ws.send(JSON.stringify({ type: 'key', key: dy > 0 ? 'ArrowUp' : 'ArrowDown' }));
+      }
+    }, { passive: true });
 
     // Focus terminal on any click
     document.addEventListener('click', () => term.focus());
